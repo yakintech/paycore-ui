@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect, useContext } from 'react'
+import { Routes, Route, Link } from 'react-router-dom'
+import Login from './pages/public/Login'
+import Categories from './pages/private/Categories'
+import axios from 'axios'
+import { AuthContext, AuthContextType } from './context/AuthContext'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+  const { isLogin, setisLogin, loading, setloading } = useContext(AuthContext) as AuthContextType;
+
+
+
+  const logout = () => {
+    localStorage.removeItem('token')
+    setisLogin(false)
+  }
+
+  return (<>
+    {
+      loading ? <>
+        <h1>loading...</h1>
+      </> : <>
+        {
+          isLogin ? <>
+          <h1>Dashboard</h1>
+          <ul>
+            <li><button onClick={logout}>Logout</button></li>
+          </ul>
+          <Routes>
+            <Route path='/' element={<Categories />}></Route>
+          </Routes>
+          </> : <>
+            <Routes>
+              <Route path='/' element={<Login />}></Route>
+            </Routes>
+          </>
+        }
+      </>
+    }
+
+  </>
+  )
 }
 
-export default App;
+export default App
+
