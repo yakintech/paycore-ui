@@ -4,6 +4,7 @@ import Login from './pages/public/Login'
 import Categories from './pages/private/Categories'
 import axios from 'axios'
 import { AuthContext, AuthContextType } from './context/AuthContext'
+import Register from './pages/public/Register'
 
 function App() {
 
@@ -31,8 +32,13 @@ function App() {
             <Route path='/' element={<Categories />}></Route>
           </Routes>
           </> : <>
+          <ul>
+            <li><Link to='/'>Login</Link></li>
+            <li><Link to='/register'>Register</Link></li>
+          </ul>
             <Routes>
-              <Route path='/' element={<Login />}></Route>
+             <Route path='/register' element={<Register />}></Route>
+             <Route path='/' element={<Login />}></Route>
             </Routes>
           </>
         }

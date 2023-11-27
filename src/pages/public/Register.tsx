@@ -1,27 +1,23 @@
-import axios from 'axios';
-import React, {useContext, useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+import React, {useState, useContext} from 'react'
 import { AuthContext, AuthContextType } from '../../context/AuthContext';
+import axios from 'axios';
 
+function Register() {
 
-function Login() {
+    const [email, setRegisterEMail] = useState('')
+    const [password, setpassword] = useState('')
+    const { setisLogin, setloading} = useContext(AuthContext) as AuthContextType;
 
-    const [email, setemail] = useState('');
-    const [password, setpassword] = useState('');
-
-    const { isLogin, setisLogin, loading, setloading } = useContext(AuthContext) as AuthContextType;
-
-    const navigate = useNavigate();
 
     const login = () => {
-        axios.post('https://localhost:7114/api/auth', {
+        axios.post('https://localhost:7114/api/auth/register', {
             email,
             password
         })
         .then(res => {
             localStorage.setItem('token',res.data.accessToken)
             localStorage.setItem('refreshToken',res.data.refreshToken)
-           localStorage.setItem('userEMail',email)  
+            localStorage.setItem('userEMail',email)
             setloading(false)   
             setisLogin(true)
         })
@@ -31,20 +27,20 @@ function Login() {
     }
 
   return (<>
-  <h1>Login Page</h1>
+  <h1>Register Page</h1>
     <div>
         <label>EMail</label>
-        <input type='text' onChange={(e) => setemail(e.target.value) } />
+        <input type='text' onChange={(e) => setRegisterEMail(e.target.value) } />
     </div>
     <div>
         <label>Password</label>
         <input type='password' onChange={(e) => setpassword(e.target.value) } />
     </div>
     <div>
-        <button onClick={login}>Login</button>
+        <button onClick={login}>Register</button>
     </div>
   </>
   )
 }
 
-export default Login
+export default Register

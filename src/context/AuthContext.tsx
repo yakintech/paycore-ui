@@ -28,10 +28,12 @@ export const AuthProvider = (props : any) => {
                   console.log(err);
                   
                   var refreshToken = localStorage.getItem("refreshToken");
-
+                  var userEMail = localStorage.getItem("userEMail");
+               
                     if(refreshToken){
                         axios.post("https://localhost:7114/api/auth/refreshtoken",{
-                            refreshToken
+                            refreshToken,
+                            email : userEMail
                         })
                         .then(res => {
                             localStorage.setItem('token',res.data.accessToken)
