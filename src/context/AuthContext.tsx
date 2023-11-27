@@ -19,13 +19,11 @@ export const AuthProvider = (props : any) => {
                 .then(res => {
                     setloading(false);
                     setisLogin(true);
-                    console.log(res.data);
-                    
-                  
+                    console.log(`success res`,res.data);
                 })
                 .catch(err => {
                     
-                  console.log(err);
+                  console.log(`first error`, err);
                   
                   var refreshToken = localStorage.getItem("refreshToken");
                   var userEMail = localStorage.getItem("userEMail");

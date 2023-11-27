@@ -1,34 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
+import { BaseNetwork } from '../../network/BaseNetwork';
 
 function Categories() {
     const [categories, setcategories] = useState([]);
 
-    const navigate = useNavigate()
     useEffect(() => {
-        var token = localStorage.getItem('token')
-
-        if (token) {
-            const config = {
-                headers: { Authorization: `Bearer ${token}` }
-            };
-            axios.get("https://localhost:7114/api/category", config)
-            .then(res => {
-                setcategories(res.data)
-            })
-            .catch(err => {
-                navigate("/login")
-            })
-
+        
+        BaseNetwork.getAll('/category').then((response : any) => {
+            setcategories(response)
+        }).catch((error : any) => {
+            console.log(error)
         }
+        )
 
     }, [])
 
     return (<>
         <ul>
             {
-                categories && categories.map((item : any) => <li>{item.name}</li>)
+                categories && categories.map((item : any) => <li key={item.id}>{item.name}</li>)
             }
         </ul>
     </>

@@ -5,15 +5,19 @@ import Categories from './pages/private/Categories'
 import axios from 'axios'
 import { AuthContext, AuthContextType } from './context/AuthContext'
 import Register from './pages/public/Register'
+import { storageHelper } from './utils/StorageHelper'
 
 function App() {
 
   const { isLogin, setisLogin, loading, setloading } = useContext(AuthContext) as AuthContextType;
 
+  storageHelper.setStoreWithEncryption(`name`, `cagatay`)
 
 
   const logout = () => {
     localStorage.removeItem('token')
+    localStorage.removeItem('refreshToken')
+    localStorage.removeItem('userEMail')
     setisLogin(false)
   }
 
