@@ -6,6 +6,7 @@ import axios from 'axios'
 import { AuthContext, AuthContextType } from './context/AuthContext'
 import Register from './pages/public/Register'
 import { storageHelper } from './utils/StorageHelper'
+import Products from './pages/private/Products'
 
 function App() {
 
@@ -30,10 +31,14 @@ function App() {
           isLogin ? <>
           <h1>Dashboard</h1>
           <ul>
-            <li><button onClick={logout}>Logout</button></li>
+            <li><Link to='/'>Categories</Link></li>
+            <li><Link to='products/'>Products</Link></li>
+
           </ul>
+          <button onClick={logout}>Logout</button>
           <Routes>
             <Route path='/' element={<Categories />}></Route>
+            <Route path='/products' element={<Products />}></Route> 
           </Routes>
           </> : <>
           <ul>
